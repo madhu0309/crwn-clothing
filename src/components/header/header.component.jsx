@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import { auth } from '../../firebase/firebase.utils'
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import { selectCartHidden } from '../../redux/cart/cart.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 // The ReactComponent import name is special and tells Create React App that you want a React component that renders an SVG, rather than its filename.
 import { ReactComponent as Logo } from '../../assets/crown.svg'
@@ -42,9 +45,9 @@ const Header = ({ currentUser, hidden }) => (
   </div>
 )
 
-const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
-  currentUser,
-  hidden
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden
 });
 
 export default connect(mapStateToProps)(Header);
@@ -52,4 +55,9 @@ export default connect(mapStateToProps)(Header);
 
 // const mapStateToProps = (state) => ({
 //   currentUser: state.user.currentUser
+// });
+
+// const mapStateToProps = ({user: { currentUser }, cart: { hidden }}) => ({
+//   currentUser,
+//   hidden
 // });
